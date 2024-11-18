@@ -1,7 +1,7 @@
 import Data.Char
 
 square :: Int -> Int
-square x = x * x
+square x = x ^ 2
 
 pyth :: Int -> Int -> Int
 pyth x y = square x + square y
@@ -22,11 +22,20 @@ countPositives :: [Int] -> Int
 countPositives list = length [1 | x <- list, x > 0]
 
 capitalised :: String -> String
-capitalised (h:hs) = toUpper h : [toLower x | x <- hs]
+capitalised (h : hs) = toUpper h : [toLower x | x <- hs]
 
 lowerWord :: String -> String
 lowerWord word = [toLower c | c <- word]
 
 title :: [String] -> [String]
 title [] = []
-title (h:words) = capitalised h : [if length word > 3 then capitalised word else lowerWord word | word <- words]
+title (h : words) = capitalised h : [if length word > 3 then capitalised word else lowerWord word | word <- words]
+
+safeTail :: [a] -> [a]
+safeTail xs = if null xs then [] else tail xs
+
+-- safeTail xs | null xs = []
+--             | otherwise tail xs
+
+-- safeTail [] = []
+-- safeTail (x : xs) = xs
