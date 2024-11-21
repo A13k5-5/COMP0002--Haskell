@@ -26,6 +26,18 @@ title [] i = []
 title (h:hs) i  | i == 0 || length h >= 4   = capitalised h : title hs (i + 1)
                 | otherwise                 = h : title hs (i + 1)
 
+insert :: Ord a => a -> [a] -> [a]
+insert num [] = [num]
+insert num nums | num < head nums = num : nums
+                | otherwise       = head nums : insert num (tail nums)
+
+-- Insertion sort
+isort :: Ord a => [a] -> [a]
+-- Recursive definition
+-- isort [] = []
+-- isort (x:xs) = insert x (isort xs)
+isort = foldr insert []
+
 -- Merges two sorted lists
 merge :: Ord a => [a] -> [a] -> [a]
 merge a [] = a
