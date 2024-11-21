@@ -21,3 +21,8 @@ capitalised' isFirst (x:xs)
 capitalised :: [Char] -> [Char]
 capitalised = capitalised' True
 
+title :: [String] -> Int -> [String]
+title [] i = []
+title (h:hs) i
+            | i == 0 || length h >= 4   = capitalised h : title hs (i + 1)
+            | otherwise                 = h : title hs (i + 1)
