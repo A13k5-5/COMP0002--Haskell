@@ -45,4 +45,27 @@ merge [] b = b
 merge a b | head a > head b = head b : merge a (tail b)
           | otherwise       = head a : merge (tail a) b
 
+rotor :: Int -> [Char] -> [Char]
+rotor shift txt | shift < 0  = error "Too damn small"
+                | shift > 25 = error "Too damn big"
+                | otherwise  =  drop shift txt ++ take shift txt
+
+makeKey :: Int -> [(Char, Char)]
+makeKey shift = zip ['A'..'Z'] (rotor shift ['A'..'Z'])
+
+lookUp :: Char -> [(Char, Char)] -> Char
+lookUp c dict | c `elem` [key | (key, val) <- dict] = head [val | (key, val) <- dict, key == c]
+              | otherwise = c
+
+encipher :: Int -> Char -> Char
+encipher shift c = lookUp c (makeKey shift)
+
+normalise :: [Char] -> [Char]
+normalise [] = []
+normalise (s:ss) | s `elem` ['0'..'9'] || toUpper s `elem` ['A'..'Z'] = toUpper s : normalise ss
+                 | otherwise = normalise ss
+
+encipherStr :: Int -> [Char] -> [Char]
+encipherStr shift [] = []
+encipherStr shift txt = [encipher shift c | c <- normalise txt]
 
