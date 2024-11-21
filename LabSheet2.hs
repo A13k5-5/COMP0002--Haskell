@@ -27,8 +27,10 @@ title (h:hs) i  | i == 0 || length h >= 4   = capitalised h : title hs (i + 1)
                 | otherwise                 = h : title hs (i + 1)
 
 -- Merges two sorted lists
-isort :: Ord a => [a] -> [a] -> [a]
-isort a [] = a
-isort [] b = b
-isort a b | head a > head b = head b : isort a (tail b)
-          | otherwise       = head a : isort (tail a) b
+merge :: Ord a => [a] -> [a] -> [a]
+merge a [] = a
+merge [] b = b
+merge a b | head a > head b = head b : merge a (tail b)
+          | otherwise       = head a : merge (tail a) b
+
+
