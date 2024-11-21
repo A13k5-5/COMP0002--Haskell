@@ -66,6 +66,34 @@ normalise (s:ss) | s `elem` ['0'..'9'] || toUpper s `elem` ['A'..'Z'] = toUpper 
                  | otherwise = normalise ss
 
 encipherStr :: Int -> [Char] -> [Char]
-encipherStr shift [] = []
-encipherStr shift txt = [encipher shift c | c <- normalise txt]
+encipherStr shift = map (encipher shift)
 
+-- Recursive
+-- encipherStr shift [] = []
+-- encipherStr shift (h:hs) = encipher shift h : encipherStr shift hs
+
+-- Non-recursive
+-- encipherStr shift txt = [encipher shift c | c <- normalise txt]
+
+-- freq table of each character in English alphabet
+freqTable :: [Int]
+freqTable = [812, 149, 271, 432, 1202, 230, 203, 592, 731, 10, 69, 398, 261, 695, 768, 182, 11, 602, 628, 910, 288, 111, 209, 17, 211, 7]
+
+freqChar :: Char -> Int
+freqChar c | toUpper c `elem` ['A'..'Z'] = freqTable !! (ord (toUpper c) - ord 'A')
+           | otherwise = 0
+
+freqStr :: [Char] -> Int
+freqStr s = sum [freqChar c | c <- s]
+
+allPosEncryptions :: [Char] -> [String]
+allPosEncryptions s = [encipherStr shift s | shift <- [0..25]]
+
+allPosFreqVals :: [Char] -> [Int]
+allPosFreqVals s = [freqStr ss | ss <- allPosEncryptions s]
+
+allPosEncryptsAndFreqVals :: [Char] -> [([Char], Int)]
+allPosEncryptsAndFreqVals s = zip (allPosEncryptions s) (allPosFreqVals s)
+
+decrypt :: [Char] -> [Char]
+decrypt s = head [txt | (txt, freqVal) <- allPosEncryptsAndFreqVals s, freqVal == maximum (allPosFreqVals s)]
