@@ -66,14 +66,14 @@ normalise (s:ss) | s `elem` ['0'..'9'] || toUpper s `elem` ['A'..'Z'] = toUpper 
                  | otherwise = normalise ss
 
 encipherStr :: Int -> [Char] -> [Char]
-encipherStr shift = map (encipher shift)
+-- encipherStr shift = map (encipher shift)
 
 -- Recursive
 -- encipherStr shift [] = []
 -- encipherStr shift (h:hs) = encipher shift h : encipherStr shift hs
 
 -- Non-recursive
--- encipherStr shift txt = [encipher shift c | c <- normalise txt]
+encipherStr shift txt = [encipher shift c | c <- normalise txt]
 
 -- freq table of each character in English alphabet
 freqTable :: [Int]
