@@ -73,3 +73,9 @@ nimGame :: IO ()
 nimGame = do
   putStrLn "welcome to nim"
   play [1, 3, 5, 7] True
+
+nextFib :: (Int, Int) -> (Int, Int)
+nextFib (a, b) = (b, a + b)
+
+fibonacci :: Int -> [Int]
+fibonacci n = take n (map fst (iterate nextFib (0, 1)))
