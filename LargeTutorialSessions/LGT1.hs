@@ -1,3 +1,5 @@
+import Data.Char (isDigit)
+
 firstPlusOne :: Num a => [a] -> a
 firstPlusOne [] = 0
 firstPlusOne (x:xs) = x + 1
@@ -15,3 +17,7 @@ addFirstTwo' :: Num a => [a] -> a
 addFirstTwo' [] = 0
 addFirstTwo' [a] = a
 addFirstTwo' xs = sum(take 2 xs)
+
+
+firstDigit' :: [Char] -> Char
+firstDigit' ss = head [s | s <- ss, isDigit s]
