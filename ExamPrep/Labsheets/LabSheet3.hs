@@ -34,5 +34,5 @@ myMap f = foldr ((:).f) []
 
 sumSquares :: [Int] -> Int
 sumSquares [] = 0
-sumSquares xs = foldr (+) 0 (map square (filter (>0) xs))
+sumSquares xs = foldr (+) 0 $ map square $ filter (>0) xs
     where square x = x * x
