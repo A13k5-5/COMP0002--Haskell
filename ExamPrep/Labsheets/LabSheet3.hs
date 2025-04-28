@@ -26,6 +26,9 @@ countPositives xs = length (filter (>0) xs)
 myLength :: [a] -> Int
 myLength = foldr ((+) . (\x -> 1)) 0
 
+myLength' :: [a] -> Int
+myLength' xs = foldl (+) 0 (map (const 1) xs)
+
 myMap :: (a -> b) -> [a] -> [b]
 myMap f = foldr ((:).f) []
 
