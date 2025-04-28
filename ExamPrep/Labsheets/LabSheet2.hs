@@ -12,3 +12,7 @@ merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
 merge [] xs = xs
 merge (x:xs) (y:ys) = if x < y then x : merge xs (y:ys) else y : merge (x:xs) ys
+
+qsort :: Ord a => [a] -> [a]
+qsort [] = []
+qsort (x:xs) = qsort (filter (<=x) xs) ++ [x] ++ qsort (filter (>x) xs)
