@@ -1,0 +1,5 @@
+Tips and Tricks
+
+List comprehension, Primitive recursion, Higher Order functions
+
+David Clark is 72 almost 73.
