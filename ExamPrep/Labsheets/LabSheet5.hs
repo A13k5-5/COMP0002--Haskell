@@ -24,11 +24,18 @@ sReadInt msg = do putStrLn msg
                   else
                     sReadInt msg
 
+readIntInRange :: Int -> Int -> String -> IO Int
+readIntInRange lo hi msg = do num <- sReadInt msg
+                              if num < lo || num > hi then
+                                readIntInRange lo hi msg
+                              else
+                                return num
+
 play :: Board -> Bool -> IO()
 play board isP1 = do displayBoard board
                      if isP1 then putStrLn "player1's turn" else putStrLn "player2's turn"
-                     row <- sReadInt "Enter heap number: "
-                     howMany <- sReadInt "Enter how many to take:"
+                     row <- readIntInRange 0 (length board - 1) "Enter heap number: "
+                     howMany <- readIntInRange 1 (board !! row) "Enter how many to take:"
                      let newBoard = makeMove board row howMany
                      if emptyBoard newBoard then
                         if isP1 then
