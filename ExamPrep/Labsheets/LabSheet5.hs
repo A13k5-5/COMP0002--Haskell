@@ -16,18 +16,19 @@ isValidInt' (s:ss) = s `elem` ['0'..'9'] && isValidInt' ss
 isValidInt :: String -> Bool
 isValidInt (s:ss) = (s `elem` '-' : ['0'..'9']) && isValidInt' ss
 
--- sReadInt :: String -> IO Int
-
+sReadInt :: String -> IO Int
+sReadInt msg = do putStrLn msg
+                  x <- getLine
+                  if isValidInt x then
+                    return (read x :: Int)
+                  else
+                    sReadInt msg
 
 play :: Board -> Bool -> IO()
 play board isP1 = do displayBoard board
                      if isP1 then putStrLn "player1's turn" else putStrLn "player2's turn"
-                     putStr "Enter heap number: "
-                     heap <- getLine
-                     let row = (read heap :: Int)
-                     putStr "Enter how many to take: "
-                     num <- getLine
-                     let howMany = (read num :: Int)
+                     row <- sReadInt "Enter heap number: "
+                     howMany <- sReadInt "Enter how many to take:"
                      let newBoard = makeMove board row howMany
                      if emptyBoard newBoard then
                         if isP1 then
