@@ -9,6 +9,16 @@ emptyBoard = foldr ((&&) . (==0)) True
 makeMove :: Board -> Int -> Int -> Board
 makeMove board row howMany = take row board ++ [board !! row - howMany] ++ drop (row + 1) board
 
+isValidInt' :: String -> Bool
+isValidInt' "" = True
+isValidInt' (s:ss) = s `elem` ['0'..'9'] && isValidInt' ss
+
+isValidInt :: String -> Bool
+isValidInt (s:ss) = (s `elem` '-' : ['0'..'9']) && isValidInt' ss
+
+-- sReadInt :: String -> IO Int
+
+
 play :: Board -> Bool -> IO()
 play board isP1 = do displayBoard board
                      if isP1 then putStrLn "player1's turn" else putStrLn "player2's turn"
